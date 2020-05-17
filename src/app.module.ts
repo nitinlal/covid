@@ -16,7 +16,7 @@ import { StatsModule } from './stats/stats-module';
       typePaths: ['./**/author.graphql'],
       definitions: {
         //TODO: nest generate definitions from AST ??
-        path: join(process.cwd(), 'src/author/graphql.ts'),
+        path: join(process.cwd(), 'src/shared/graphql-types.ts'),
         outputAs: 'class', // output as class
       },
     }),
