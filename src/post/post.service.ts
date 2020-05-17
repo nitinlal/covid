@@ -7,7 +7,7 @@ export class PostService {
     return [
       {
         id: 1,
-        title: '',
+        title: 'test',
       },
     ];
   }
