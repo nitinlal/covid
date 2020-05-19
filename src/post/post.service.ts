@@ -6,7 +6,7 @@ export class PostService {
   findAll(arg0: { authorId: any }): Post[] {
     return [
       {
-        id: 1,
+        id: arg0.authorId,
         title: 'test',
       },
     ];
