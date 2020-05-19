@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthorModule } from './author/author.module';
 import { StatsModule } from './stats/stats-module';
+import { StatesModule } from './states/states.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { StatsModule } from './stats/stats-module';
         outputAs: 'class', // output as class
       },
     }),
+    StatesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
