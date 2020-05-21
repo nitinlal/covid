@@ -6,12 +6,17 @@ import { AppService } from './app.service';
 import { AuthorModule } from './author/author.module';
 import { StatsModule } from './stats/stats-module';
 import { StatesModule } from './states/states.module';
+import { ConfigModule } from '@nestjs/config';
+import appConfig from './config/app-config';
 
 @Module({
   imports: [
     StatsModule,
     HttpModule,
     AuthorModule,
+    ConfigModule.forRoot({
+      load: [appConfig],
+    }),
     GraphQLModule.forRoot({
       include: [StatsModule, AuthorModule],
       typePaths: ['./**/author.graphql'],
