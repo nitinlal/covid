@@ -34,5 +34,5 @@ export class Data {
     recovery_cases?: string;
     death_cases?: string;
     currently_infected?: string;
-    last_updated?: string;
+    last_update?: string;
 }
