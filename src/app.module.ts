@@ -1,13 +1,13 @@
 import { HttpModule, Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthorModule } from './author/author.module';
-import { StatsModule } from './stats/stats-module';
-import { StatesModule } from './states/states.module';
-import { ConfigModule } from '@nestjs/config';
 import appConfig from './config/app-config';
+import { StatesModule } from './states/states.module';
+import { StatsModule } from './stats/stats-module';
 
 @Module({
   imports: [
@@ -19,7 +19,7 @@ import appConfig from './config/app-config';
     }),
     GraphQLModule.forRoot({
       include: [StatsModule, AuthorModule],
-      typePaths: ['./**/author.graphql'],
+      typePaths: ['./**/author.graphql', './**/stats.graphql'],
       definitions: {
         //TODO: nest generate definitions from AST ??
         path: join(process.cwd(), 'src/shared/graphql-types.ts'),

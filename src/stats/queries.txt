@@ -1,0 +1,7 @@
+{
+  stats {
+    data {
+      total_cases
+    }
+  }
+}

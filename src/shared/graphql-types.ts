@@ -21,4 +21,18 @@ export class Post {
 
 export abstract class IQuery {
     abstract author(id: number): Author | Promise<Author>;
+
+    abstract stats(): Stats | Promise<Stats>;
+}
+
+export class Stats {
+    data?: Data;
+}
+
+export class Data {
+    total_cases?: string;
+    recovery_cases?: string;
+    death_cases?: string;
+    currently_infected?: string;
+    last_updated?: string;
 }

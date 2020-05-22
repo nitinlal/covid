@@ -1,5 +1,16 @@
 
+type Stats {
+    data: Data
+}
+
+type Data {
+    total_cases: String
+    recovery_cases: String
+    death_cases: String
+    currently_infected: String
+    last_update: String
+}
 
 type Query {
-    state(name: String): State;
+  stats: Stats
 }
