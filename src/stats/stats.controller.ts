@@ -9,6 +9,8 @@ export class StatsController {
 
   @Get()
   findAll(): Observable<StatsDto> {
-    return this.statService.findAll();
+    const res = this.statService.findAll();
+    res.subscribe((val) => console.log(val))
+    return res;
   }
 }
