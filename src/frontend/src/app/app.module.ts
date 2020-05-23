@@ -7,6 +7,8 @@ import { MatSliderModule } from '@angular/material/slider';
 import { ChartsModule } from 'ng2-charts';
 import 'hammerjs';
 import { HttpClientModule } from '@angular/common/http';
+import { ApolloModule } from 'apollo-angular';
+import { HttpLinkModule } from 'apollo-angular-link-http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,6 +18,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatSliderModule,
     ChartsModule,
     HttpClientModule,
+    ApolloModule,
+    HttpLinkModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
