@@ -16,6 +16,8 @@ export class AppComponent implements OnInit {
     this.myForm = this.fb.group({
       userstat: this.fb.array([]),
     });
+
+    this.getStats('total_cases');
   }
 
   title = 'frontend';
@@ -37,10 +39,7 @@ export class AppComponent implements OnInit {
   ) {
     apollo.create({
       link: httpLink.create({ uri: 'http://localhost:3000/graphql' }),
-      cache: new InMemoryCache({
-        resultCaching: false,
-        freezeResults: false,
-      }),
+      cache: new InMemoryCache(),
     });
   }
   statsRes;
@@ -101,7 +100,7 @@ export class AppComponent implements OnInit {
     this.getStats(cases);
   }
 
-  public pieChartLabels: any[] = [];
+  public pieChartLabels: string[] = [''];
   public pieChartType: string = 'pie';
   // events
   public chartClicked(e: any): void {
