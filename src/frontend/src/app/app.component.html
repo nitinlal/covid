@@ -10,3 +10,15 @@ Test <mat-slider min="1" max="100" step="1" value="1"></mat-slider>
     (chartClick)="chartClicked($event)"
   ></canvas>
 </div>
+
+<form [formGroup]="myForm">
+  <div *ngFor="let data of stats">
+    <input
+      type="checkbox"
+      (change)="onChange(data.stat, $event.target.checked)"
+    />
+    {{ data.stat }}<br />
+  </div>
+</form>
+
+<pre>Form values: {{ myForm.value | json }}</pre>
