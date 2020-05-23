@@ -26,8 +26,8 @@ export class AppComponent implements OnInit {
     { stat: 'currently_infected' },
   ];
   myForm: FormGroup;
-  pieChartData: string[] = [];
-  arr: string[] = [];
+  pieChartData: number[] = [];
+  arr: number[] = [];
 
   constructor(
     private http: HttpClient,
@@ -60,6 +60,7 @@ export class AppComponent implements OnInit {
         this.statsRes = result.data;
         if (this.statsRes.stats) {
           this.pieChartData = [];
+          this.pieChartLabels = [];
           this.arr = Object.keys(this.statsRes.stats.data)
             .map(k => {
               if (
@@ -70,11 +71,13 @@ export class AppComponent implements OnInit {
                   'currently_infected',
                 ].includes(k)
               ) {
+                this.pieChartLabels.push(k);
                 return this.statsRes.stats.data[k];
               }
             })
             .filter(v => !!v)
-            .map(v => v.replace(/,/g, ''));
+            .map(v => v.replace(/,/g, ''))
+            .map(v => parseInt(v));
         }
         this.pieChartData.push(...this.arr);
       });
@@ -98,7 +101,7 @@ export class AppComponent implements OnInit {
     this.getStats(cases);
   }
 
-  public pieChartLabels: any[] = [...this.stats.map(s => s.stat)];
+  public pieChartLabels: any[] = [];
   public pieChartType: string = 'pie';
 
   // events
