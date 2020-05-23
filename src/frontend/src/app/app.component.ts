@@ -26,8 +26,8 @@ export class AppComponent implements OnInit {
     { stat: 'currently_infected' },
   ];
   myForm: FormGroup;
-  pieChartData: number[] = [];
-  arr: number[] = [];
+  public pieChartData: number[] = [];
+  public arr: number[] = [];
 
   constructor(
     private http: HttpClient,
@@ -103,7 +103,6 @@ export class AppComponent implements OnInit {
 
   public pieChartLabels: any[] = [];
   public pieChartType: string = 'pie';
-
   // events
   public chartClicked(e: any): void {
     //console.log(e);

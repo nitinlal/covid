@@ -1,14 +1,13 @@
 Test <mat-slider min="1" max="100" step="1" value="1"></mat-slider>
 
+
 <div style="display: block">
-  <canvas
-    baseChart
-    [data]="pieChartData"
-    [labels]="pieChartLabels"
-    [chartType]="pieChartType"
-    (chartHover)="chartHovered($event)"
-    (chartClick)="chartClicked($event)"
-  ></canvas>
+<canvas baseChart
+        [data]="pieChartData"
+        [labels]="pieChartLabels"
+        [chartType]="pieChartType"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)"></canvas>
 </div>
 
 <form [formGroup]="myForm">
