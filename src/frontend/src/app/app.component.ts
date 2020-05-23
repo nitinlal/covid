@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
-import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -26,6 +26,8 @@ export class AppComponent implements OnInit {
     { stat: 'currently_infected' },
   ];
   myForm: FormGroup;
+  pieChartData: string[] = [];
+  arr: string[] = [];
 
   constructor(
     private http: HttpClient,
@@ -40,14 +42,10 @@ export class AppComponent implements OnInit {
         freezeResults: false,
       }),
     });
-
-    this.getStats();
   }
-  // stats
   statsRes;
 
   public getStats = (val = 'total_cases') => {
-    console.log('stats called', val);
     this.apollo
       .query({
         query: gql`              {
@@ -60,12 +58,29 @@ export class AppComponent implements OnInit {
       })
       .subscribe(result => {
         this.statsRes = result.data;
-        console.log(this.statsRes.stats);
+        if (this.statsRes.stats) {
+          this.pieChartData = [];
+          this.arr = Object.keys(this.statsRes.stats.data)
+            .map(k => {
+              if (
+                [
+                  'total_cases',
+                  'recovery_cases',
+                  'death_cases',
+                  'currently_infected',
+                ].includes(k)
+              ) {
+                return this.statsRes.stats.data[k];
+              }
+            })
+            .filter(v => !!v)
+            .map(v => v.replace(/,/g, ''));
+        }
+        this.pieChartData.push(...this.arr);
       });
   };
 
   onChange(stat: string, isChecked: boolean) {
-    console.log('onchange called');
     const statFormArray = <FormArray>this.myForm.controls.userstat;
 
     if (isChecked) {
@@ -80,26 +95,18 @@ export class AppComponent implements OnInit {
       return acc;
     }, '');
 
-    console.log({ cases });
     this.getStats(cases);
   }
 
-  public pieChartLabels: string[] = [
-    'Chrome',
-    'Safari',
-    'Firefox',
-    'Internet Explorer',
-    'Other',
-  ];
-  public pieChartData: number[] = [40, 20, 20, 10, 10];
+  public pieChartLabels: any[] = [...this.stats.map(s => s.stat)];
   public pieChartType: string = 'pie';
 
   // events
   public chartClicked(e: any): void {
-    console.log(e);
+    //console.log(e);
   }
 
   public chartHovered(e: any): void {
-    console.log(e);
+    //console.log(e);
   }
 }
