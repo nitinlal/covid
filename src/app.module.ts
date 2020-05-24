@@ -1,6 +1,7 @@
 import { HttpModule, Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
+import { MongooseModule } from '@nestjs/mongoose';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -14,6 +15,7 @@ import { StatsModule } from './stats/stats-module';
     StatsModule,
     HttpModule,
     AuthorModule,
+    StatesModule,
     ConfigModule.forRoot({
       load: [appConfig],
     }),
@@ -26,7 +28,13 @@ import { StatsModule } from './stats/stats-module';
         outputAs: 'class', // output as class
       },
     }),
-    StatesModule,
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>('STATES_DB_URI'),
+      }),
+      inject: [ConfigService],
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
