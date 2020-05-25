@@ -1,0 +1,8 @@
+type States {
+  state: String
+  recovered: String
+}
+
+type Query {
+  states(name: String!): States
+}

@@ -20,8 +20,12 @@ import { StatsModule } from './stats/stats-module';
       load: [appConfig],
     }),
     GraphQLModule.forRoot({
-      include: [StatsModule, AuthorModule],
-      typePaths: ['./**/author.graphql', './**/stats.graphql'],
+      include: [StatsModule, AuthorModule, StatesModule],
+      typePaths: [
+        './**/author.graphql',
+        './**/stats.graphql',
+        './**/states.graphql',
+      ],
       definitions: {
         //TODO: nest generate definitions from AST ??
         path: join(process.cwd(), 'src/shared/graphql-types.ts'),

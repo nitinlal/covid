@@ -18,8 +18,15 @@ export class StatesService {
   }
 
   findByName(name: string) {
-    return this.http
-      .get<StatesDTO>(this.config.STATES_URI)
-      .pipe(map(res => res.data.filter(d => d.state === name)));
+    console.log('service called with name', { name });
+    return this.http.get<StatesDTO>(this.config.STATES_URI).pipe(
+      map(res => {
+        const response = res.data.find(d => {
+          return d.state === name;
+        });
+        console.log('found state', name, response);
+        return response;
+      }),
+    );
   }
 }

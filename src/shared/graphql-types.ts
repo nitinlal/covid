@@ -22,7 +22,14 @@ export class Post {
 export abstract class IQuery {
     abstract author(id: number): Author | Promise<Author>;
 
+    abstract states(name: string): States | Promise<States>;
+
     abstract stats(): Stats | Promise<Stats>;
+}
+
+export class States {
+    state?: string;
+    recovered?: string;
 }
 
 export class Stats {

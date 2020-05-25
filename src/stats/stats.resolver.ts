@@ -7,6 +7,7 @@ export class StatsResolver {
 
   @Query('stats')
   async stats() {
+    console.log('calling stats');
     return this.serv.findAll();
   }
 }
