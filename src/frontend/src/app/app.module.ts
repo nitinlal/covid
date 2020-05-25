@@ -9,10 +9,11 @@ import { HttpLinkModule } from 'apollo-angular-link-http';
 import 'hammerjs';
 import { ChartsModule } from 'ng2-charts';
 import { AppComponent } from './app.component';
+import { PieChartComponent } from '../piechart/piechart';
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, PieChartComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
