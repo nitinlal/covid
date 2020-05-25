@@ -121,6 +121,12 @@ export class AppComponent implements OnInit {
             .map(v => parseInt(v));
         }
         console.log('response', this.statesDataRes);
+        this.statesData = [
+          {
+            data: this.statesDataRes,
+            label: 'Statistics per state',
+          },
+        ];
       });
   };
 
