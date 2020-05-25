@@ -9,6 +9,7 @@
     (chartClick)="chartClicked($event)"
   >
   </canvas>
+
   <form [formGroup]="myForm">
     <div *ngFor="let data of stats">
       <input
@@ -18,4 +19,15 @@
       {{ data.stat }}<br />
     </div>
   </form>
+</div>
+
+<div style="display: block">
+  <p>Stats per state</p>
+  <canvas
+    baseChart
+    [data]="statesDataRes"
+    [labels]="statesLabels"
+    [chartType]="'bar'"
+  >
+  </canvas>
 </div>

@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
+import { ChartDataSets } from 'chart.js';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ export class AppComponent implements OnInit {
     });
 
     this.getStats('total_cases');
+    this.getStates('state recovered');
   }
 
   title = 'frontend';
@@ -30,6 +32,15 @@ export class AppComponent implements OnInit {
   myForm: FormGroup;
   public pieChartData: number[] = [];
   public arr: number[] = [];
+
+  statesData: ChartDataSets[] = [
+    {
+      data: [1, 2, 3],
+      label: 'baah',
+    },
+  ];
+  statesLabels: string[] = [];
+  statesDataRes: number[] = [];
 
   constructor(
     private http: HttpClient,
@@ -79,6 +90,37 @@ export class AppComponent implements OnInit {
             .map(v => parseInt(v));
         }
         this.pieChartData.push(...this.arr);
+      });
+  };
+
+  public getStates = (val = 'state') => {
+    this.apollo
+      .query({
+        query: gql`
+          {
+            states(name: "OR") {
+              state
+              recovered
+            }
+          }
+        `,
+      })
+      .subscribe(result => {
+        console.log({ result });
+        if (result.data['states']) {
+          this.statesLabels = [];
+          this.statesDataRes = Object.keys(result.data['states'])
+            .map(k => {
+              if (['recovered'].includes(k)) {
+                this.statesLabels.push(k);
+                return result.data['states'][k];
+              }
+            })
+            .filter(v => !!v)
+            .map(v => v.replace(/,/g, ''))
+            .map(v => parseInt(v));
+        }
+        console.log('response', this.statesDataRes);
       });
   };
 
