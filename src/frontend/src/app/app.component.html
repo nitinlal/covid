@@ -1,17 +1,5 @@
-<piechart></piechart>
-
-<form [formGroup]="myForm">
-  <div *ngFor="let data of stats">
-    <input
-      type="checkbox"
-      (change)="onChange(data.stat, $event.target.checked)"
-    />
-    {{ data.stat }}<br />
-  </div>
-</form>
-
-
 <div style="display: block">
+  <p>General Statistics</p>
   <canvas
     baseChart
     [data]="pieChartData"
@@ -21,4 +9,13 @@
     (chartClick)="chartClicked($event)"
   >
   </canvas>
+  <form [formGroup]="myForm">
+    <div *ngFor="let data of stats">
+      <input
+        type="checkbox"
+        (change)="onChange(data.stat, $event.target.checked)"
+      />
+      {{ data.stat }}<br />
+    </div>
+  </form>
 </div>
