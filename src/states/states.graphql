@@ -1,6 +1,9 @@
 type States {
   state: String
   recovered: String
+  positive: String
+  death: String
+  total: String
 }
 
 type Query {

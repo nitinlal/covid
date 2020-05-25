@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import gql from 'graphql-tag';
 import { ChartDataSets } from 'chart.js';
+import gql from 'graphql-tag';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
     });
 
     this.getStats('total_cases');
-    this.getStates('state recovered');
+    this.getStates('state recovered positive death total');
   }
 
   title = 'frontend';
@@ -101,6 +101,9 @@ export class AppComponent implements OnInit {
             states(name: "OR") {
               state
               recovered
+              positive
+              death
+              total
             }
           }
         `,
@@ -111,7 +114,7 @@ export class AppComponent implements OnInit {
           this.statesLabels = [];
           this.statesDataRes = Object.keys(result.data['states'])
             .map(k => {
-              if (['recovered'].includes(k)) {
+              if (['recovered', 'positive', 'death', 'total'].includes(k)) {
                 this.statesLabels.push(k);
                 return result.data['states'][k];
               }

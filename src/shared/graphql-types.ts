@@ -30,6 +30,9 @@ export abstract class IQuery {
 export class States {
     state?: string;
     recovered?: string;
+    positive?: string;
+    death?: string;
+    total?: string;
 }
 
 export class Stats {
