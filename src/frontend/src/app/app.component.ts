@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Apollo } from 'apollo-angular';
+import { Apollo, Subscription } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ChartDataSets } from 'chart.js';
@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
     });
 
     this.getStats('total_cases');
-    this.getStates('state recovered positive death total');
+    this.getStates('OR');
   }
 
   title = 'frontend';
@@ -41,6 +41,28 @@ export class AppComponent implements OnInit {
   ];
   statesLabels: string[] = [];
   statesDataRes: number[] = [];
+
+  values = [
+    {
+      name: 'OR',
+    },
+    {
+      name: 'AK',
+    },
+  ];
+
+  private querySubscription: Subscription;
+  statesQuery = gql`
+    query states($name: String!) {
+      states(name: $name) {
+        state
+        recovered
+        positive
+        death
+        total
+      }
+    }
+  `;
 
   constructor(
     private http: HttpClient,
@@ -93,22 +115,15 @@ export class AppComponent implements OnInit {
       });
   };
 
-  public getStates = (val = 'state') => {
+  public getStates = (name: string = 'OR') => {
     this.apollo
-      .query({
-        query: gql`
-          {
-            states(name: "OR") {
-              state
-              recovered
-              positive
-              death
-              total
-            }
-          }
-        `,
+      .watchQuery({
+        query: this.statesQuery,
+        variables: {
+          name,
+        },
       })
-      .subscribe(result => {
+      .valueChanges.subscribe(result => {
         console.log({ result });
         if (result.data['states']) {
           this.statesLabels = [];
@@ -149,6 +164,11 @@ export class AppComponent implements OnInit {
     }, '');
 
     this.getStats(cases);
+  }
+
+  onDropChange(event) {
+    const newVal = event.target.value;
+    this.getStates(newVal);
   }
 
   public pieChartLabels: string[] = [''];

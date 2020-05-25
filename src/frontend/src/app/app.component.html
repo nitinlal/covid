@@ -31,3 +31,7 @@
   >
   </canvas>
 </div>
+
+<select (change)="onDropChange($event)">
+  <option *ngFor="let v of values" [value]="v.name">{{v.name}}</option>
+</select>
