@@ -101,7 +101,7 @@ export class AppComponent implements OnInit {
   }
 
   public pieChartLabels: string[] = [''];
-  public pieChartType: string = 'pie';
+  public pieChartType: string = 'bar';
   // events
   public chartClicked(e: any): void {
     //console.log(e);
