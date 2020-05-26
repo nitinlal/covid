@@ -357,9 +357,13 @@ export class AppComponent implements OnInit {
           labels: { fontColor: 'white' },
         },
         scales: {
+          ticks: {
+            min: 0,
+            beginAtZero: true,
+          },
           xAxes: [
             {
-              ticks: { fontColor: 'white' },
+              ticks: { fontColor: 'black' },
               gridLines: { color: 'rgba(255,255,255,0.1)' },
             },
           ],

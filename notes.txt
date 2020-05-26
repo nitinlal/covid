@@ -1,0 +1,68 @@
+Charts js : https://coursetro.com/posts/code/126/Let's-build-an-Angular-5-Chart.js-App---Tutorial
+Getting started: https://www.chartjs.org/docs/latest/getting-started/
+
+Presentation:
+* Controllers 
+* Services 
+* Modules 
+    * Singleton 
+    * Providers are encapsulated unless exported
+    * @global modules 
+    * Dynamic modules 
+    * SOLID: https://en.wikipedia.org/wiki/SOLID
+* Middlewqre 
+    * Same as express middleware 
+    * Changes to request and response 
+    * Call next 
+    * Middleware consumer is a helper class 
+    * Functions or classes 
+* Filters 
+    * Filters ?????
+    * Look into design pattern `
+    * https://en.wikipedia.org/wiki/Intercepting_filter_pattern
+* Interceptors: 
+    * Interceptors ??
+* Pipes 
+    * Run inside exception zone 
+    * Errors throw can be caught by the custom exception filter 
+    * We want to ensure that any incoming request to the create method contains a valid body. So we have to validate the three members of the createCatDto object. We could do this inside the route handler method, but we would break the single responsibility rule (SRP). Another approach could be to create a validator class and delegate the task there, but we would have to use this validator at the beginning of each method. How about creating a validation middleware? This could be a good idea, but it's not possible to create generic middleware which can be used across the whole application (because middleware is unaware of the execution context, including the handler that will be called and any of its parameters).
+		It turns out that this is a case ideally suited for a Pipe. So let's go ahead and build one.
+    * JOI schema 
+* Security
+    * CORS 
+
+
+
+* Interceptors vs filters vs middlware 
+    * https://stackoverflow.com/questions/54863655/whats-the-difference-between-interceptor-vs-middleware-vs-filter-in-nest-js
+
+	
+ 
+	
+* Mongo setup
+    * Define config 
+    * Add module with async setup 
+    * Provide connection details 
+* Schematics easy generation of code 
+* DI 
+    * How DI works in Nest 
+    * Graph concept 
+    * Singleton Modules 
+    * Cannot inject modules but can inject providers everywhere ?? (Circular dependencies )
+* Config and validation
+* Graphql : 
+        * Setup 
+		https://graphql.org/learn/queries/
+		* differences between graphql/rest 
+* Microservice  ???
+
+
+
+Sources:
+* https://www.apollographql.com/docs/
+*  https://covidtracking.com/about-data/visualization-guide
+
+
+
+APIS:
+* https://api.covid19api.com/summary
