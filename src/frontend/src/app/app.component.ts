@@ -3,8 +3,10 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ChartDataSets } from 'chart.js';
+import { ChartDataSets, ChartOptions } from 'chart.js';
 import gql from 'graphql-tag';
+import { ThemeService } from 'ng2-charts';
+type Theme = 'light-theme' | 'dark-theme';
 
 @Component({
   selector: 'app-root',
@@ -232,6 +234,7 @@ export class AppComponent implements OnInit {
     private apollo: Apollo,
     httpLink: HttpLink,
     private fb: FormBuilder,
+    private themeService: ThemeService,
   ) {
     apollo.create({
       link: httpLink.create({ uri: 'http://localhost:3000/graphql' }),
@@ -343,5 +346,44 @@ export class AppComponent implements OnInit {
 
   public chartHovered(e: any): void {
     //console.log(e);
+  }
+
+  public set selectedTheme(value) {
+    this._selectedTheme = value;
+    let overrides: ChartOptions;
+    if (this.selectedTheme === 'dark-theme') {
+      overrides = {
+        legend: {
+          labels: { fontColor: 'white' },
+        },
+        scales: {
+          xAxes: [
+            {
+              ticks: { fontColor: 'white' },
+              gridLines: { color: 'rgba(255,255,255,0.1)' },
+            },
+          ],
+          yAxes: [
+            {
+              offset: true,
+              ticks: { fontColor: 'white' },
+              gridLines: { color: 'rgba(255,255,255,0.1)' },
+            },
+          ],
+        },
+      };
+    } else {
+      overrides = {};
+    }
+    this.themeService.setColorschemesOptions(overrides);
+  }
+
+  private _selectedTheme: Theme = 'dark-theme';
+  public get selectedTheme() {
+    return this._selectedTheme;
+  }
+
+  setCurrentTheme(theme: Theme) {
+    this.selectedTheme = theme;
   }
 }
