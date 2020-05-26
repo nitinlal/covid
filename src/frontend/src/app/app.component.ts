@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Apollo, Subscription } from 'apollo-angular';
+import { Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ChartDataSets } from 'chart.js';
@@ -221,7 +220,6 @@ export class AppComponent implements OnInit {
   statesQuery = gql`
     query states($name: String!) {
       states(name: $name) {
-        state
         recovered
         positive
         death
@@ -300,7 +298,7 @@ export class AppComponent implements OnInit {
                 return result.data['states'][k];
               }
             })
-            .filter(v => !!v)
+            .map(v => (v ? v : '0'))
             .map(v => v.replace(/,/g, ''))
             .map(v => parseInt(v));
         }
