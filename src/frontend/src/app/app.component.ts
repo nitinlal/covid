@@ -22,6 +22,9 @@ export class AppComponent implements OnInit {
     this.getStates('OR');
   }
 
+  // VARS
+  public pieChartLabels: string[] = [''];
+  public pieChartType: string = 'bar';
   title = 'frontend';
   stats = [
     { stat: 'total_cases' },
@@ -215,8 +218,6 @@ export class AppComponent implements OnInit {
       name: 'VI',
     },
   ];
-
-  private querySubscription: Subscription;
   statesQuery = gql`
     query states($name: String!) {
       states(name: $name) {
@@ -230,7 +231,6 @@ export class AppComponent implements OnInit {
   `;
 
   constructor(
-    private http: HttpClient,
     private apollo: Apollo,
     httpLink: HttpLink,
     private fb: FormBuilder,
@@ -242,6 +242,7 @@ export class AppComponent implements OnInit {
   }
   statsRes;
 
+  // API
   public getStats = (val = 'total_cases') => {
     this.apollo
       .query({
@@ -313,6 +314,7 @@ export class AppComponent implements OnInit {
       });
   };
 
+  // NG Changes
   onChange(stat: string, isChecked: boolean) {
     const statFormArray = <FormArray>this.myForm.controls.userstat;
 
@@ -336,8 +338,6 @@ export class AppComponent implements OnInit {
     this.getStates(newVal);
   }
 
-  public pieChartLabels: string[] = [''];
-  public pieChartType: string = 'bar';
   // events
   public chartClicked(e: any): void {
     //console.log(e);
